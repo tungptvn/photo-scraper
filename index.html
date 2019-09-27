@@ -1,70 +1,41 @@
 <!DOCTYPE html>
 <html class="">
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
   <title>Pham Thanh Tung</title>
   <link href="./index_files/css" rel="stylesheet" type="text/css">
   <link href="./index_files/css(1)" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="./index_files/bundle.css">
   <style type="text/css"></style>
 </head>
-
 <body data-gr-c-s-loaded="true">
-
   <header>
     <div class="Logo">
-      <a href="#" class="img">
+      <a href="#" onclick="window.location.reload();return false;"  class="img">
         <span></span>
         <span></span>
         <span></span>
         <span></span>
       </a>
       <span class="name">Pham Thanh Tung</span>
-      <span class="text">PhotoScraper</span>
+      <span class="text">Photo Scraper</span>
       <div style="text-align: center;opacity: .66;">
-        <input id="ipImgs" type="text">
+        <input class="ipImgs" type="text">
       </div>
     </div>
   </header>
-
   <div class="Container">
-
     <div class="Images">
-
-
-
     </div>
-
   </div>
   <div class="Lightbox">
     <img class="portrait">
   </div>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-firestore.js"></script>
   <script src="./index_files/jquery.js"></script>
   <script src="./index_files/bundle.js"></script>
-  <script>
-    $(document).ready(function () {
-      $('#ipImgs').change(function () {
-        var imgs = []
-        if (this.value.charAt(0) === '[')
-          imgs = JSON.parse(this.value)
-        else
-          imgs = this.value.split(',')
-        $('.Images').html('')
-
-        imgs.map(x => $(`<div class="Image">
-        <div class="Image-overlay"></div>
-       
-       
-        <img src="${x}" data-zoom="${x}" alt="">
-      </div>`)).map(img => $('.Images').append(img))
-
-      })
-    });
-  </script>
-
-
+  <script src="./index_files/app.js">    </script>
 </body>
-
 </html>
