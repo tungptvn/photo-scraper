@@ -40,26 +40,35 @@
     if (isQueryDoc) {
       var collection = searchParams.get("collection"),
         doc = searchParams.get("doc"),
-        field = searchParams.get("field")
+        field = searchParams.get("field");
+      firebase.firestore()
+        .collection(collection)
+        .doc(doc)
+        .get()
+        .then(imgsDb => imgsDb.data())
+        .then(data => data[field])
+        .then(imgs => {
+          render(imgs.split(','))
+        })
     }
-    firebase.firestore()
-      .collection(collection)
-      .doc(doc)
-      .get()
-      .then(imgsDb => imgsDb.data())
-      .then(data =>  data[field])
-      .then(imgs => {
-        render(imgs.split(','))
-      })
+
   }
   function render(imgs) {
-    if (imgs.length == 0) return
+    var total = imgs.length, loaded = 0
+    if (total == 0) return
     $('.Images').html('')
     imgs.map(x => $(`<div class="Image">
                       <div class="Image-overlay"></div>
                       <img src="${x}" data-zoom="${x}" alt="">
                     </div>`))
-      .map(img => $('.Images').append(img))
+      .map((img, i) => {
+        img.find('img')[0].onload = function () {
+          $('#info').text(++loaded + '/' + total)
+        }
+        $('.Images').append(img)
+
+      })
+
   }
 
 
