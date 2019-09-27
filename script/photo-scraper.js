@@ -1,7 +1,8 @@
 cf = {
-    timeDelay: 1000,
-    pFrom: 0, pTo: 10,
-    pageTemplate: '&page=__pageNum__'
+    timeDelay: 0,
+    pFrom: 0, pTo: 17,
+	pageTemplate: 'page-__pageNum__'
+    //pageTemplate: '&page=__pageNum__'
 }
 
 
