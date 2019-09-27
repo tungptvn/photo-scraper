@@ -47,7 +47,7 @@
       .doc(doc)
       .get()
       .then(imgsDb => imgsDb.data())
-      .then(data => { console.log(data); return data[field] })
+      .then(data =>  data[field])
       .then(imgs => {
         render(imgs.split(','))
       })
