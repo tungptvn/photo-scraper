@@ -1,5 +1,5 @@
 
-import { config ,run } from './modules/photo-forum.js';
+import { getUserConfig ,run } from './modules/photo-forum.js';
 import { bindModalEvent } from'./modules/event-modal.js';
 import { initfirebase } from './modules/firebase.js';
 init()
@@ -11,7 +11,7 @@ function init() {
 function bindEvents() {
   bindModalEvent()
 
-  document.getElementById('userConfig').value = JSON.stringify(config, undefined, 4);
+  document.getElementById('userConfig').value = JSON.stringify(  getUserConfig(), undefined, 4);
 
   $(document).ready(function () {
     $('.ipImgs').change(function () {
