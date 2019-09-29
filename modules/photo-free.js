@@ -13,11 +13,15 @@ async function runFree() {
         .then(x => x.text())
         .then(data => data.match(/<a.+\/a>/g))
         .then(x => x.map( a=>  toHref(a) ))
+    const convertUrl = s=> (new RegExp(getUserConfig().url).test(s))? s : getUserConfig().url+ s 
 
-    var tasks = anchors.toSet().map(async (x,i) => await getImgs(x,i))
+
+    var tasks = anchors.toSet().map(async (x,i) => await getImgs( convertUrl(x),i))
     renderItems(tasks)
     var imgs = await Promise.all(tasks)
-    var text = imgs.reduce((a, c) => a.concat(c), []).toSet().toString()
+    var text = imgs.reduce((a, c) => a.concat(c), []).toSet()
+    .filter(x => new RegExp(getUserConfig().filter).test(x))
+    .toString()
     return text
 }
 

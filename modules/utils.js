@@ -25,7 +25,6 @@ Array.prototype.toSet = function () { return [...new Set(this)] };
 
 async function getImgs(url, i = 0) {
 
-   // if(!(new RegExp(getUserConfig().url).test(url))) url = getUserConfig().url+ url 
 
     const toSrc=  a =>  a.match(/src="(.*?)"/)[1] 
     const toAlt=  a => a.match(/alt="(.*?)"/) ? a.match(/alt="(.*?)"/)[1] : ''
