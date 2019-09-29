@@ -3,8 +3,9 @@ const config = {
     url: '',
     pFrom: 0, pTo: 10,
     pageTemplate: 'page-__pageNum__',
-    filter: 'http',
-    isFree: false
+    filterRq: 'http',
+    filterImgSrc: 'http' ,
+    isFree: true
     //pageTemplate: '&page=__pageNum__'
 }
 

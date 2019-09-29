@@ -1,4 +1,4 @@
-import { rq, renderItems, getImgs } from './utils.js'
+import { rq, renderItems, getImgs, render, setArray, limitArray  } from './utils.js'
 import {getUserConfig} from './config.js'
 
 Array.prototype.toSet = function () { return [...new Set(this)] };
@@ -13,16 +13,19 @@ async function runFree() {
         .then(x => x.text())
         .then(data => data.match(/<a.+\/a>/g))
         .then(x => x.map( a=>  toHref(a) ))
+        
     const convertUrl = s=> (new RegExp(getUserConfig().url).test(s))? s : getUserConfig().url+ s 
 
 
-    var tasks = anchors.toSet().map(async (x,i) => await getImgs( convertUrl(x),i))
+    var tasks =   limitArray(setArray(anchors),20).map(async (x,i) => await getImgs( convertUrl(x),i))
     renderItems(tasks)
     var imgs = await Promise.all(tasks)
     var text = imgs.reduce((a, c) => a.concat(c), []).toSet()
-    .filter(x => new RegExp(getUserConfig().filter).test(x))
+    .filter(x => getUserConfig().filterImgSrc && new RegExp(getUserConfig().filterImgSrc).test(x))
     .toString()
-    return text
+
+    render(text.split(','))
+    
 }
 
 export {runFree}

@@ -58,28 +58,9 @@ async function app() {
     }
     else
     rs = await runForum()
-    render(rs.split(','))
+    //render(rs.split(','))
   }
 
 }
-function render(imgs) {
-  var total = imgs.length, loaded = 0
-  if (total == 0) return
-  $('.Images').html('')
-  var selectSrc = x=>x.split('__comma__')[0], selectAlt = x=>x.split('__comma__')[1]
-  console.log('imgs',imgs)
 
-  imgs.map(x => $(`<div class="Image">
-                      <div class="Image-overlay"></div>
-                      <img src="${selectSrc(x)}" data-zoom="${selectSrc(x)}" title="${selectAlt(x)}" alt="${selectAlt(x)}">
-                    </div>`))
-    .map((img, i) => {
-      img.find('img')[0].onload = function () {
-        $('#info').text(++loaded + '/' + total)
-      }
-      $('.Images').append(img)
-
-    })
-
-}
 
