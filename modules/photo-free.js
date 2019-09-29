@@ -17,7 +17,7 @@ async function runFree() {
     const convertUrl = s=> (new RegExp(getUserConfig().url).test(s))? s : getUserConfig().url+ s 
 
 
-    var tasks =   limitArray(setArray(anchors),20).map(async (x,i) => await getImgs( convertUrl(x),i))
+    var tasks =   limitArray(setArray(anchors),200).map(async (x,i) => await getImgs( convertUrl(x),i))
     renderItems(tasks)
     var imgs = await Promise.all(tasks)
     var text = imgs.reduce((a, c) => a.concat(c), []).toSet()
