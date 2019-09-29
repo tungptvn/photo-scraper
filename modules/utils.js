@@ -24,15 +24,19 @@ async function renderItems(tasks) {
 Array.prototype.toSet = function () { return [...new Set(this)] };
 
 async function getImgs(url, i = 0) {
-    console.log('url',url)
-    if(!(new RegExp(getUserConfig().url).test(url))) url = getUserConfig().url+ url 
-    console.log('url1',url)
+
+   // if(!(new RegExp(getUserConfig().url).test(url))) url = getUserConfig().url+ url 
+
+    const toSrc=  a =>  a.match(/src="(.*?)"/)[1] 
+    const toAlt=  a => a.match(/alt="(.*?)"/) ? a.match(/alt="(.*?)"/)[1] : ''
+    const replaceComma = s=>s.replace(/,/g,'&#44;')
     return new Promise(rs => {
         setTimeout(() => {
             rs(rq(url)
                 .then(x => x.text()).then(data => data.match(/<img.+\/>/g))
-                .then(x => x.toSet().map(x => x.match(/src="(.*?)"/)[1]))
-                .catch(e => Promise.resolve(''))
+                .then(x=>x.filter(x=>!/base64/.test(x)) )
+                .then(x => x.toSet().map(x => toSrc(x)+'__comma__'+replaceComma( toAlt(x)) ))
+                .catch(e => Promise.resolve('__comma__'))
 
             )
 
