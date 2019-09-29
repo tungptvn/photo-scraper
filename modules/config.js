@@ -5,7 +5,8 @@ const config = {
     pageTemplate: 'page-__pageNum__',
     filterRq: 'http',
     filterImgSrc: 'http' ,
-    isFree: true
+    isFree: true,
+    crosAnywhere: true
     //pageTemplate: '&page=__pageNum__'
 }
 

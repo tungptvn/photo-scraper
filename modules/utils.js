@@ -1,7 +1,7 @@
 import {getUserConfig} from './config.js'
 
 function rq(url) {
-    return fetch('https://cors-anywhere.herokuapp.com/' + url)
+    return fetch( getUserConfig().crosAnywhere? 'https://cors-anywhere.herokuapp.com/' + url: url)
 }
 
 
