@@ -1,7 +1,9 @@
 
-import { getUserConfig ,run } from './modules/photo-forum.js';
+import {  runForum } from './modules/photo-forum.js';
+import { runFree } from './modules/photo-free.js'
 import { bindModalEvent } from'./modules/event-modal.js';
 import { initfirebase } from './modules/firebase.js';
+import { getUserConfig } from './modules/config.js'
 init()
 bindEvents()
 app()
@@ -50,8 +52,12 @@ async function app() {
       })
   }
   if(searchParams.has('userConfig')){
-    var rs = await run()
-    console.log('rs',rs)
+    var rs = ''
+    if(getUserConfig().isFree){
+      rs = await runFree()
+    }
+    else
+    rs = await runForum()
     render(rs.split(','))
   }
 

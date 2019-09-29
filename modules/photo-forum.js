@@ -1,17 +1,5 @@
-import { rq } from './utils.js';
-const config = {
-    timeDelay: 0,
-    url: '',
-    pFrom: 0, pTo: 10,
-    pageTemplate: 'page-__pageNum__',
-    filter: 'http'
-    //pageTemplate: '&page=__pageNum__'
-}
-
-function getUserConfig() {
-    var searchParams = new URLSearchParams(window.location.search);
-    return JSON.parse(searchParams.get('userConfig')) || config
-}
+import { rq ,renderItems} from './utils.js';
+import {getUserConfig} from './config.js'
 
 function getImgs(url, i = 0) {
     var base = url.split('/')[2]
@@ -26,20 +14,15 @@ function getImgs(url, i = 0) {
         }, i * getUserConfig().timeDelay)
     })
 }
-// function copy(text) {
-//     var input = document.createElement('input');
-//     input.setAttribute('value', text);
-//     document.body.appendChild(input);
-//     input.select();
-//     var result = document.execCommand('copy');
-//     document.body.removeChild(input)
-//     return result;
-// }
 
-async function run() {
-    var ret = await Promise.all(Array.from(Array(getUserConfig().pTo - getUserConfig().pFrom).keys())
-        .map(x => getUserConfig().url + getUserConfig().pageTemplate.replace('__pageNum__', x + getUserConfig().pFrom + 1))
-        .map((url, i) => getImgs(url, i)));
+async function runForum() {
+    var tasks = Array.from(Array(getUserConfig().pTo - getUserConfig().pFrom).keys())
+    .map(x => getUserConfig().url + getUserConfig().pageTemplate.replace('__pageNum__', x + getUserConfig().pFrom + 1))
+    .map((url, i) => getImgs(url, i))
+    renderItems(tasks)
+    var ret = await Promise.all(tasks);
+
+
     var urlex = getUserConfig().url.split('/'), baseUrl = urlex[0] + '//' + urlex[2]
     var text = [...new Set(ret.reduce((a, c) => a.concat(c), []))]
         .map(x => /proxy/.test(x) ? baseUrl + '/' + x : x)
@@ -48,5 +31,5 @@ async function run() {
 
 }
 
-export { run, getUserConfig }
+export { runForum, getUserConfig }
 
