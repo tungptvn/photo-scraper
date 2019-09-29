@@ -56,9 +56,14 @@ function render(imgs) {
                         <img src="${selectSrc(x)}" data-zoom="${selectSrc(x)}" title="${selectAlt(x)}" alt="${selectAlt(x)}">
                       </div>`))
       .map((img, i) => {
-        img.find('img')[0].onload = function () {
+        var imgEl = img.find('img')[0]
+        imgEl.onload = function () {
           $('#info').text(++loaded + '/' + total)
         }
+        imgEl.onerror = function(){
+            console.log('img error', imgEl.src)
+            this.style.display = "none";
+        } 
         $('.Images').append(img)
   
       })
