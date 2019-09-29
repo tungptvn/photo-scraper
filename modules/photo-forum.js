@@ -1,19 +1,5 @@
-import { rq ,renderItems} from './utils.js';
+import { rq ,renderItems, getImgs} from './utils.js';
 import {getUserConfig} from './config.js'
-
-function getImgs(url, i = 0) {
-    var base = url.split('/')[2]
-    return new Promise(rs => {
-        setTimeout(() => {
-            rs(rq(url)
-                .then(x => x.text()).then(data => data.match(/<img.+\/>/g))
-                .then(x => Array.from(new Set(x)).map(x => x.match(/src="(.*?)"/)[1]))
-                .catch(_ => rs())
-            )
-
-        }, i * getUserConfig().timeDelay)
-    })
-}
 
 async function runForum() {
     var tasks = Array.from(Array(getUserConfig().pTo - getUserConfig().pFrom).keys())

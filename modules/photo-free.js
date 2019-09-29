@@ -1,21 +1,7 @@
-import { rq, renderItems } from './utils.js'
+import { rq, renderItems, getImgs } from './utils.js'
 import {getUserConfig} from './config.js'
 
-Array.prototype.toSet = function () { return [...new Set(this)] };
 
-async function getImgs(url, i = 0) {
-    return new Promise(rs => {
-        setTimeout(() => {
-            rs(rq(url)
-                .then(x => x.text()).then(data => data.match(/<img.+\/>/g))
-                .then(x => x.toSet().map(x => x.match(/src="(.*?)"/)[1]))
-                .catch(e => Promise.resolve(''))
-
-            )
-
-        }, i)
-    })
-}
 async function runFree() {
 
     var anchors = await rq(getUserConfig().url)
