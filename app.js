@@ -12,8 +12,10 @@ function init() {
 }
 function bindEvents() {
   bindModalEvent()
+  var uCf = Object.assign({}, getUserConfig());
+  delete uCf.origin
 
-  document.getElementById('userConfig').value = JSON.stringify(  getUserConfig(), undefined, 4);
+  document.getElementById('userConfig').value = JSON.stringify(  uCf, undefined, 4);
 
   $(document).ready(function () {
     $('.ipImgs').change(function () {

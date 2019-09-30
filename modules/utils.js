@@ -41,7 +41,7 @@ async function getImgs(url, i = 0) {
 
             )
 
-        }, i)
+        }, i*getUserConfig().timeDelay)
     })
 }
 function render(imgs) {

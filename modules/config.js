@@ -7,7 +7,7 @@ const config = {
     isFree: true,
     crosAnywhere: false,
     timeDelay: 0,
-    litmitRq: 200
+    limitRq: 200
     //pageTemplate: '&page=__pageNum__'
 }
 
