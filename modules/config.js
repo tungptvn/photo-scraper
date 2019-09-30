@@ -1,17 +1,21 @@
 const config = {
-    timeDelay: 0,
     url: '__url__',
     pFrom: 0, pTo: 10,
     pageTemplate: 'page-__pageNum__',
     filterRq: 'http',
-    filterImgSrc: 'http' ,
+    filterImgSrc: 'http',
     isFree: true,
-    crosAnywhere: false
+    crosAnywhere: false,
+    timeDelay: 0,
+    litmitRq: 200
     //pageTemplate: '&page=__pageNum__'
 }
 
 function getUserConfig() {
     var searchParams = new URLSearchParams(window.location.search);
-    return JSON.parse(searchParams.get('userConfig')) || config
+    var ret = JSON.parse(searchParams.get('userConfig')) || config
+    var urlex = config.url.split('/') ,origin =  urlex[0] + '//' + urlex[2]
+    ret.origin = origin
+    return ret
 }
-export {  getUserConfig }
+export { getUserConfig }
