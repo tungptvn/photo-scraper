@@ -4,6 +4,7 @@ import { runFree } from './modules/photo-free.js'
 import { bindModalEvent } from'./modules/event-modal.js';
 import { initfirebase } from './modules/firebase.js';
 import { getUserConfig } from './modules/config.js'
+import { render } from './modules/utils.js'
 init()
 bindEvents()
 app()
@@ -64,5 +65,3 @@ async function app() {
   }
 
 }
-
-
