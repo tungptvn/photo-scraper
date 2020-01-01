@@ -6,7 +6,7 @@ const config = {
     filterImgSrc: 'http',
     isFree: false,
     crosAnywhere: true,
-    timeDelay: 0,
+    timeDelay: 1000,
     limitRq: 200
     //pageTemplate: '&page=__pageNum__'
 }
