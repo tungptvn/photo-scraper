@@ -19,18 +19,10 @@ function bindEvents() {
   document.getElementById('userConfig').value = JSON.stringify(  uCf, undefined, 4);
 
   $(document).ready(function () {
-    $('.ipImgs').change(function () {
-      var imgs = []
-      if (this.value.charAt(0) === '[')
-        imgs = JSON.parse(this.value)
-      else
-        imgs = this.value.split(',')
-      render(imgs)
-    })
+   
     $('.ipImgs').dblclick(function () {
       navigator.clipboard.readText().then(clipText => {
         this.value = clipText
-        $('.ipImgs').trigger('change')
       })
     })
   });
@@ -40,7 +32,12 @@ function bindEvents() {
 async function app() {
   var searchParams = new URLSearchParams(window.location.search);
   var isQueryDoc = searchParams.has("doc")
-  if (isQueryDoc) {
+  var ishasSource = searchParams.has("imgsSource")
+  if(ishasSource){
+    var imgs = searchParams.get("imgsSource")
+    render(imgs.split(','))
+  } 
+  else if (isQueryDoc) {
     var collection = searchParams.get("collection"),
       doc = searchParams.get("doc"),
       field = searchParams.get("field");
@@ -54,7 +51,7 @@ async function app() {
         render(imgs.split(','))
       })
   }
-  if(searchParams.has('userConfig')){
+  else if(searchParams.has('userConfig')){
     var rs = ''
     if(getUserConfig().isFree){
       rs = await runFree()
