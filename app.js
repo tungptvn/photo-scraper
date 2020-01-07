@@ -31,8 +31,8 @@ function bindEvents() {
 }
 async function app() {
   var searchParams = new URLSearchParams(window.location.search);
-  var isQueryDoc = searchParams.has("doc")
-  var ishasSource = searchParams.has("imgsSource")
+  var isQueryDoc = searchParams.has("doc") && searchParams.get("doc")
+  var ishasSource = searchParams.has("imgsSource") && searchParams.get("imgsSource")
   if(ishasSource){
     var imgs = searchParams.get("imgsSource")
     render(imgs.split(','))
